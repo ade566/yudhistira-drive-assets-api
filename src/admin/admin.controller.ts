@@ -14,7 +14,7 @@ export class AdminController {
         try {
             return {
                 statusCode: 200,
-                message: 'Success Create Admin',
+                message: 'Admin berhasil dibuat',
                 data: await this.adminService.create(dto)
             };
         } catch (error) {
@@ -33,7 +33,7 @@ export class AdminController {
         try {
             return {
                 statusCode: 200,
-                message: 'Success Update Admin',
+                message: 'Admin berhasil diperbarui',
                 data: await this.adminService.update(id, dto),
             };
         } catch (error) {

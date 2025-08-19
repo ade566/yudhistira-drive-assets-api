@@ -12,7 +12,7 @@ export class CategoriesController {
     async getAll() {
         return {
             statusCode: 200,
-            message: 'Success Get Categories',
+            message: 'Data kategori berhasil diambil',
             data: await this.categoriesService.findAll()
         };
     }
@@ -21,7 +21,7 @@ export class CategoriesController {
     async getOne(@Param('id') id: number) {
         return {
             statusCode: 200,
-            message: 'Success Get Categories',
+            message: 'Data kategori berhasil diambil',
             data: await this.categoriesService.findOne(id)
         };
     }
@@ -32,7 +32,7 @@ export class CategoriesController {
         try {
             return {
                 statusCode: 200,
-                message: 'Success Create Categories',
+                message: 'Kategori berhasil dibuat',
                 data: await this.categoriesService.create(dto)
             };
         } catch (error) {
@@ -46,7 +46,7 @@ export class CategoriesController {
         try {
             return {
                 statusCode: 200,
-                message: 'Success Update Categories',
+                message: 'Kategori berhasil diperbarui',
                 data: await this.categoriesService.update(id, dto),
             };
         } catch (error) {
@@ -58,7 +58,7 @@ export class CategoriesController {
     async remove(@Param('id') id: number) {
         return {
             statusCode: 200,
-            message: 'Success Get Categories',
+            message: 'Kategori berhasil dihapus',
             data: await this.categoriesService.remove(id)
         };
     }

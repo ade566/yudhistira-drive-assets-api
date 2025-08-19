@@ -14,7 +14,7 @@ export class UsersController {
         try {
             return {
                 statusCode: 200,
-                message: 'Success Create User',
+                message: 'User berhasil dibuat',
                 data: await this.usersService.create(dto)
             };
         } catch (error) {
@@ -33,7 +33,7 @@ export class UsersController {
         try {
             return {
                 statusCode: 200,
-                message: 'Success Update User',
+                message: 'User berhasil diperbarui',
                 data: await this.usersService.update(id, dto),
             };
         } catch (error) {
