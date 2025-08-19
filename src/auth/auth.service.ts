@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Admin } from '../admin/admin.entity';
@@ -16,7 +16,6 @@ export class AuthService {
         private jwtService: JwtService,
     ) { }
 
-    // login user
     async loginUser(email: string, password: string) {
         const user = await this.usersRepository.findOne({ where: { email } });
         if (!user) throw new UnauthorizedException('Email atau password salah');
@@ -28,15 +27,14 @@ export class AuthService {
 
         user.password = 'PASSWORD_NOT_DISPLAYED'
 
-        return { 
-            access_token: this.jwtService.sign(payload), 
+        return {
+            access_token: this.jwtService.sign(payload),
             role: 'user',
             statusCode: 200,
             data: user
         };
     }
 
-    // login admin
     async loginAdmin(email: string, password: string) {
         const admin = await this.adminsRepository.findOne({ where: { email } });
         if (!admin) throw new UnauthorizedException('Email atau password salah');
@@ -49,7 +47,7 @@ export class AuthService {
         admin.password = 'PASSWORD_NOT_DISPLAYED'
 
         return {
-            access_token: this.jwtService.sign(payload), 
+            access_token: this.jwtService.sign(payload),
             role: 'admin',
             statusCode: 200,
             data: admin

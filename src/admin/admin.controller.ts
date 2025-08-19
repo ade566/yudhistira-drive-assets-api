@@ -1,6 +1,5 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseInterceptors, UploadedFile, ConflictException } from '@nestjs/common';
+import { Controller, Post, Put, Body, Param, UseInterceptors, ConflictException } from '@nestjs/common';
 import { AdminService } from './admin.service';
-import { Admin } from './admin.entity';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';

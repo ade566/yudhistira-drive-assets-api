@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
@@ -9,14 +10,18 @@ import { Admin } from '../admin/admin.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([User, Admin]), // ✅ inject repository di sini
-        JwtModule.register({
-            secret: 'b7f8e2c1a9d4f6e3b2c7a1e8d5f4c3b6', // sebaiknya pakai .env
-            signOptions: { expiresIn: '1h' },
+        TypeOrmModule.forFeature([User, Admin]),
+        JwtModule.registerAsync({
+            imports: [ConfigModule],
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => ({
+                secret: config.get<string>('JWT_SECRET'),
+                signOptions: { expiresIn: config.get<string>('JWT_EXPIRES_IN') },
+            }),
         }),
     ],
     controllers: [AuthController],
     providers: [AuthService],
-    exports: [AuthService], // kalau mau dipakai module lain
+    exports: [AuthService]
 })
 export class AuthModule { }

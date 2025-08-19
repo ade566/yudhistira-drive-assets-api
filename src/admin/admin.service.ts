@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Admin } from './admin.entity';
@@ -12,7 +12,7 @@ export class AdminService {
 
     async create(data: Partial<Admin>) {
         let hashedPassword: string | undefined;
-        
+
         if (data.password) {
             const salt = await bcrypt.genSalt();
             hashedPassword = await bcrypt.hash(data.password, salt);

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseInterceptors, UploadedFile, ConflictException } from '@nestjs/common';
+import { Controller, Post, Body, UseInterceptors } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { AuthDto } from './dto/auth.dto';
