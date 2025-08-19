@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
@@ -24,6 +27,17 @@ import { CategoriesModule } from './categories/categories.module';
 				synchronize: true,
 			}),
 		}),
+		ServeStaticModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (config: ConfigService) => [
+			  {
+				rootPath: join(config.get<string>('PATH_FILE') ?? '', 'uploads'),
+				serveRoot: '/uploads',
+			  }
+			],
+		  }),
+		  
 		UsersModule,
 		AdminModule,
 		AuthModule,

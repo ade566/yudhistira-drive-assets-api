@@ -18,7 +18,7 @@ export class Categories {
     @Expose()
     get file_url(): string {
       return this.file
-        ? `${process.env.APP_URL}uploads/categories/${this.file}`
+        ? `${process.env.APP_URL}${this.file}`
         : '';
     }
 }
