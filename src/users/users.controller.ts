@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Put, Delete, Body, Param, UseInterceptors, UploadedFile, ConflictException } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { User } from './user.entity';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
