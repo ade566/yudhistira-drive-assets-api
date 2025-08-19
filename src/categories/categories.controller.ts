@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Put, Delete, Body, Param, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
@@ -12,11 +12,15 @@ export class CategoriesController {
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Get()
-    async getAll() {
+    async getAll(@Query('limit') limitQuery: string) {
+        const limit = limitQuery ? parseInt(limitQuery, 10) : undefined;
         return {
             statusCode: 200,
             message: 'Data kategori berhasil diambil',
-            data: await this.categoriesService.findAll()
+            limit,
+            data: await this.categoriesService.findAll({
+                limit
+            })
         };
     }
 

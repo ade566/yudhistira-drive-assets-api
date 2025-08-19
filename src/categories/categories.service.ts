@@ -9,7 +9,10 @@ export class CategoriesService {
         @InjectRepository(Categories) private categoriesRepo: Repository<Categories>,
     ) { }
 
-    findAll() {
+    async findAll(options?: { limit?: number, all?: boolean }) {
+        if (options?.limit && options.limit > 0) {
+            return this.categoriesRepo.find({ take: options.limit });
+        }
         return this.categoriesRepo.find();
     }
 
