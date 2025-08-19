@@ -3,6 +3,7 @@ import { CategoriesService } from './categories.service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
 import { FileUpload, validateImageFile, joinPath } from '../../utils/file-upload.util';
+import { slug } from '../../utils/general';
 import { unlink } from 'fs/promises';
 
 @Controller('categories')
@@ -42,6 +43,7 @@ export class CategoriesController {
                 message: 'Kategori berhasil dibuat',
                 data: await this.categoriesService.create({
                     ...dto,
+                    slug: slug(dto.name ?? ''),
                     file: 'uploads/categories/' + file?.filename,
                 }),
             };
@@ -54,7 +56,6 @@ export class CategoriesController {
         }
     }
 
-
     @Put('update/:id')
     @UseInterceptors(FileUpload('file', 'categories'))
     async update(
@@ -63,7 +64,7 @@ export class CategoriesController {
         @UploadedFile() file: Express.Multer.File
     ) {
         try {
-            validateImageFile(file, 2);
+            validateImageFile(file, 2, true);
             
             const old = await this.categoriesService.findOne(id);
 
@@ -80,6 +81,7 @@ export class CategoriesController {
                 message: 'Kategori berhasil diperbarui',
                 data: await this.categoriesService.update(id, {
                     ...dto,
+                    slug: slug(dto.name ?? ''),
                     file: file ? 'uploads/categories/' + file.filename : old?.file,
                 }),
             };

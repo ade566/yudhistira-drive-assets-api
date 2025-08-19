@@ -16,19 +16,21 @@ export function FileUpload(fieldName = 'file', folder: string) {
     });
 }
 
-export function validateImageFile(file: Express.Multer.File, maxSizeMB) {
-    if (!file) {
-        throw new BadRequestException('File wajib diupload');
-    }
+export function validateImageFile(file: Express.Multer.File, maxSizeMB: number, optional: boolean = false) {
+    if (!optional) {
+        if (!file) {
+            throw new BadRequestException('File wajib diupload');
+        }
 
-    if (!file.mimetype.match(/^image\/(jpeg|jpg|png|gif)$/)) {
-        throw new BadRequestException(
-            'File harus berupa gambar (jpg, jpeg, png, gif)',
-        );
-    }
+        if (!file.mimetype.match(/^image\/(jpeg|jpg|png|gif)$/)) {
+            throw new BadRequestException(
+                'File harus berupa gambar (jpg, jpeg, png, gif)',
+            );
+        }
 
-    if (file.size > maxSizeMB * 1024 * 1024) {
-        throw new BadRequestException(`Ukuran file maksimal ${maxSizeMB}MB`);
+        if (file.size > maxSizeMB * 1024 * 1024) {
+            throw new BadRequestException(`Ukuran file maksimal ${maxSizeMB}MB`);
+        }
     }
 }
 

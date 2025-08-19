@@ -10,6 +10,9 @@ export class Categories {
     name: string;
 
     @Column({ nullable: true })
+    slug?: string;
+
+    @Column({ nullable: true })
     file?: string;
 
     @Expose()
