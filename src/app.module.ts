@@ -9,6 +9,7 @@ import { UsersModule } from './users/users.module';
 import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
+import { GroupingsModule } from './groupings/groupings.module';
 
 @Module({
 	imports: [
@@ -41,7 +42,8 @@ import { CategoriesModule } from './categories/categories.module';
 		UsersModule,
 		AdminModule,
 		AuthModule,
-		CategoriesModule
+		CategoriesModule,
+		GroupingsModule
 	],
 })
 export class AppModule { }
