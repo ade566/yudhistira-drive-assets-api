@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { GroupingsModule } from './groupings/groupings.module';
 import { ExtensionsModule } from './extensions/extensions.module';
+import { FormatsModule } from './formats/formats.module';
 
 @Module({
 	imports: [
@@ -45,7 +46,8 @@ import { ExtensionsModule } from './extensions/extensions.module';
 		AuthModule,
 		CategoriesModule,
 		GroupingsModule,
-		ExtensionsModule
+		ExtensionsModule,
+		FormatsModule
 	],
 })
 export class AppModule { }
