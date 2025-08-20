@@ -10,6 +10,7 @@ import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { CategoriesModule } from './categories/categories.module';
 import { GroupingsModule } from './groupings/groupings.module';
+import { ExtensionsModule } from './extensions/extensions.module';
 
 @Module({
 	imports: [
@@ -32,18 +33,19 @@ import { GroupingsModule } from './groupings/groupings.module';
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: (config: ConfigService) => [
-			  {
-				rootPath: join(config.get<string>('PATH_FILE') ?? '', 'uploads'),
-				serveRoot: '/uploads',
-			  }
+			  	{
+					rootPath: join(config.get<string>('PATH_FILE') ?? '', 'uploads'),
+					serveRoot: '/uploads',
+				}
 			],
-		  }),
+		}),
 		  
 		UsersModule,
 		AdminModule,
 		AuthModule,
 		CategoriesModule,
-		GroupingsModule
+		GroupingsModule,
+		ExtensionsModule
 	],
 })
 export class AppModule { }
