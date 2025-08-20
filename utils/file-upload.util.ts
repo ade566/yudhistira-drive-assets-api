@@ -35,10 +35,9 @@ export function validateImageFile(file: Express.Multer.File, maxSizeMB: number, 
 }
 
 
-export function joinPath(folder: string, item_file: string) {
+export function joinPath(item_file: string) {
     return path.join(
         process.cwd(),
-        'uploads/' + folder,
         item_file,
     );
 }

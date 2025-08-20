@@ -10,6 +10,17 @@ export class UsersService {
         @InjectRepository(User) private usersRepo: Repository<User>,
     ) { }
 
+    async findAll(options?: { limit?: number, all?: boolean }) {
+        if (options?.limit && options.limit > 0) {
+            return this.usersRepo.find({ take: options.limit });
+        }
+        return this.usersRepo.find();
+    }
+
+    findOne(id: number) {
+        return this.usersRepo.findOne({ where: { id } });
+    }
+
     async create(data: Partial<User>) {
         let hashedPassword: string | undefined;
         
@@ -25,7 +36,6 @@ export class UsersService {
 
         return this.usersRepo.save(user);
     }
-
 
     async update(id: number, data: Partial<User>) {
         const user = await this.usersRepo.findOneBy({ id });

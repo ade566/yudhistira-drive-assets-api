@@ -54,7 +54,7 @@ export class CategoriesController {
 
         } catch (err) {
             if (file?.path) {
-                await unlink(file.path);
+                await unlink(file.path).catch(() => {});
             }
             throw err;
         }
@@ -68,17 +68,15 @@ export class CategoriesController {
         @UploadedFile() file: Express.Multer.File
     ) {
         try {
-            validateImageFile(file, 2, true);
-            
             const old = await this.categoriesService.findOne(id);
 
             if (file) {
                 validateImageFile(file, 2);
           
                 if (old?.file) {
-                    await unlink(joinPath('categories', old.file));
+                    await unlink(joinPath(old.file)).catch(() => {});
                 }
-              }
+            }
 
             return {
                 statusCode: 200,
@@ -91,7 +89,7 @@ export class CategoriesController {
             };
         } catch (error) {
             if (file?.path) {
-                await unlink(file.path);
+                await unlink(file.path).catch(() => {});
             }
             throw error;
         }
@@ -103,7 +101,7 @@ export class CategoriesController {
             const old = await this.categoriesService.findOne(id);
 
             if (old?.file) {
-                await unlink(joinPath('categories', old.file));
+                await unlink(joinPath(old.file)).catch(() => {});
             }
 
             return {
