@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
-import { GroupingsService } from './groupings.service';
+import { FormatsService } from './service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
 import { slug } from '../../utils/general';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 
-@Controller('groupings')
-export class GroupingsController {
-    constructor(private readonly groupingsService: GroupingsService) { }
+@Controller('formats')
+export class FormatsController {
+    constructor(private readonly formatsService: FormatsService) { }
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Get()
@@ -15,9 +15,9 @@ export class GroupingsController {
         const limit = limitQuery ? parseInt(limitQuery, 10) : undefined;
         return {
             statusCode: 200,
-            message: 'Data group berhasil diambil',
+            message: 'Data format berhasil diambil',
             limit,
-            data: await this.groupingsService.findAll({
+            data: await this.formatsService.findAll({
                 limit
             })
         };
@@ -27,8 +27,8 @@ export class GroupingsController {
     async getOne(@Param('id') id: number) {
         return {
             statusCode: 200,
-            message: 'Data group berhasil diambil',
-            data: await this.groupingsService.findOne(id)
+            message: 'Data format berhasil diambil',
+            data: await this.formatsService.findOne(id)
         };
     }
 
@@ -38,8 +38,8 @@ export class GroupingsController {
         try {
             return {
                 statusCode: 200,
-                message: 'Group berhasil dibuat',
-                data: await this.groupingsService.create({
+                message: 'format berhasil dibuat',
+                data: await this.formatsService.create({
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -57,12 +57,12 @@ export class GroupingsController {
         @Body() dto: UpdateDto
     ) {
         try {
-            const old = await this.groupingsService.findOne(id);
+            const old = await this.formatsService.findOne(id);
 
             return {
                 statusCode: 200,
-                message: 'Group berhasil diperbarui',
-                data: await this.groupingsService.update(id, {
+                message: 'format berhasil diperbarui',
+                data: await this.formatsService.update(id, {
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -77,8 +77,8 @@ export class GroupingsController {
         try {
             return {
                 statusCode: 200,
-                message: 'Group berhasil dihapus',
-                data: await this.groupingsService.remove(id)
+                message: 'ekstensi berhasil dihapus',
+                data: await this.formatsService.remove(id)
             };
         } catch (error) {
             throw error;

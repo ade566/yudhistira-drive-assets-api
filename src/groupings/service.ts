@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Groupings } from './groupings.entity';
+import { Groupings } from './entity';
 
 @Injectable()
 export class GroupingsService {

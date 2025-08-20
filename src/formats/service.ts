@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Formats } from './formats.entity';
+import { Formats } from './entity';
 
 @Injectable()
 export class FormatsService {

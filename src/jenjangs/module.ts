@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JenjangsService } from './jenjangs.service';
-import { JenjangsController } from './jenjangs.controller';
-import { Jenjangs } from './jenjangs.entity';
+import { JenjangsService } from './service';
+import { JenjangsController } from './controller';
+import { Jenjangs } from './entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Jenjangs])],

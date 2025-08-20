@@ -1,5 +1,5 @@
 import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
+import { CategoriesService } from './service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
 import { FileUpload, validateImageFile, joinPath } from '../../utils/file-upload.util';

@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
-import { ExtensionsService } from './extensions.service';
+import { JenjangsService } from './service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
 import { slug } from '../../utils/general';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 
-@Controller('extensions')
-export class ExtensionsController {
-    constructor(private readonly extensionsService: ExtensionsService) { }
+@Controller('jenjangs')
+export class JenjangsController {
+    constructor(private readonly jenjangsService: JenjangsService) { }
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Get()
@@ -15,9 +15,9 @@ export class ExtensionsController {
         const limit = limitQuery ? parseInt(limitQuery, 10) : undefined;
         return {
             statusCode: 200,
-            message: 'Data ekstensi berhasil diambil',
+            message: 'Data jenjang berhasil diambil',
             limit,
-            data: await this.extensionsService.findAll({
+            data: await this.jenjangsService.findAll({
                 limit
             })
         };
@@ -27,8 +27,8 @@ export class ExtensionsController {
     async getOne(@Param('id') id: number) {
         return {
             statusCode: 200,
-            message: 'Data ekstensi berhasil diambil',
-            data: await this.extensionsService.findOne(id)
+            message: 'Data jenjang berhasil diambil',
+            data: await this.jenjangsService.findOne(id)
         };
     }
 
@@ -38,8 +38,8 @@ export class ExtensionsController {
         try {
             return {
                 statusCode: 200,
-                message: 'ekstensi berhasil dibuat',
-                data: await this.extensionsService.create({
+                message: 'jenjang berhasil dibuat',
+                data: await this.jenjangsService.create({
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -57,12 +57,12 @@ export class ExtensionsController {
         @Body() dto: UpdateDto
     ) {
         try {
-            const old = await this.extensionsService.findOne(id);
+            const old = await this.jenjangsService.findOne(id);
 
             return {
                 statusCode: 200,
-                message: 'ekstensi berhasil diperbarui',
-                data: await this.extensionsService.update(id, {
+                message: 'jenjang berhasil diperbarui',
+                data: await this.jenjangsService.update(id, {
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -77,8 +77,8 @@ export class ExtensionsController {
         try {
             return {
                 statusCode: 200,
-                message: 'ekstensi berhasil dihapus',
-                data: await this.extensionsService.remove(id)
+                message: 'jenjang berhasil dihapus',
+                data: await this.jenjangsService.remove(id)
             };
         } catch (error) {
             throw error;

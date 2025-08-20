@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { FormatsService } from './formats.service';
-import { FormatsController } from './formats.controller';
-import { Formats } from './formats.entity';
+import { FormatsService } from './service';
+import { FormatsController } from './controller';
+import { Formats } from './entity';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Formats])],

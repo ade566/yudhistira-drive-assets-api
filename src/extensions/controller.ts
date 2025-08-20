@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
-import { FormatsService } from './formats.service';
+import { ExtensionsService } from './service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
 import { slug } from '../../utils/general';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 
-@Controller('formats')
-export class FormatsController {
-    constructor(private readonly formatsService: FormatsService) { }
+@Controller('extensions')
+export class ExtensionsController {
+    constructor(private readonly extensionsService: ExtensionsService) { }
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Get()
@@ -15,9 +15,9 @@ export class FormatsController {
         const limit = limitQuery ? parseInt(limitQuery, 10) : undefined;
         return {
             statusCode: 200,
-            message: 'Data format berhasil diambil',
+            message: 'Data ekstensi berhasil diambil',
             limit,
-            data: await this.formatsService.findAll({
+            data: await this.extensionsService.findAll({
                 limit
             })
         };
@@ -27,8 +27,8 @@ export class FormatsController {
     async getOne(@Param('id') id: number) {
         return {
             statusCode: 200,
-            message: 'Data format berhasil diambil',
-            data: await this.formatsService.findOne(id)
+            message: 'Data ekstensi berhasil diambil',
+            data: await this.extensionsService.findOne(id)
         };
     }
 
@@ -38,8 +38,8 @@ export class FormatsController {
         try {
             return {
                 statusCode: 200,
-                message: 'format berhasil dibuat',
-                data: await this.formatsService.create({
+                message: 'ekstensi berhasil dibuat',
+                data: await this.extensionsService.create({
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -57,12 +57,12 @@ export class FormatsController {
         @Body() dto: UpdateDto
     ) {
         try {
-            const old = await this.formatsService.findOne(id);
+            const old = await this.extensionsService.findOne(id);
 
             return {
                 statusCode: 200,
-                message: 'format berhasil diperbarui',
-                data: await this.formatsService.update(id, {
+                message: 'ekstensi berhasil diperbarui',
+                data: await this.extensionsService.update(id, {
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -78,7 +78,7 @@ export class FormatsController {
             return {
                 statusCode: 200,
                 message: 'ekstensi berhasil dihapus',
-                data: await this.formatsService.remove(id)
+                data: await this.extensionsService.remove(id)
             };
         } catch (error) {
             throw error;

@@ -1,13 +1,13 @@
 import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, UploadedFile, ClassSerializerInterceptor } from '@nestjs/common';
-import { JenjangsService } from './jenjangs.service';
+import { GroupingsService } from './service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
 import { slug } from '../../utils/general';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 
-@Controller('jenjangs')
-export class JenjangsController {
-    constructor(private readonly jenjangsService: JenjangsService) { }
+@Controller('groupings')
+export class GroupingsController {
+    constructor(private readonly groupingsService: GroupingsService) { }
 
     @UseInterceptors(ClassSerializerInterceptor)
     @Get()
@@ -15,9 +15,9 @@ export class JenjangsController {
         const limit = limitQuery ? parseInt(limitQuery, 10) : undefined;
         return {
             statusCode: 200,
-            message: 'Data jenjang berhasil diambil',
+            message: 'Data group berhasil diambil',
             limit,
-            data: await this.jenjangsService.findAll({
+            data: await this.groupingsService.findAll({
                 limit
             })
         };
@@ -27,8 +27,8 @@ export class JenjangsController {
     async getOne(@Param('id') id: number) {
         return {
             statusCode: 200,
-            message: 'Data jenjang berhasil diambil',
-            data: await this.jenjangsService.findOne(id)
+            message: 'Data group berhasil diambil',
+            data: await this.groupingsService.findOne(id)
         };
     }
 
@@ -38,8 +38,8 @@ export class JenjangsController {
         try {
             return {
                 statusCode: 200,
-                message: 'jenjang berhasil dibuat',
-                data: await this.jenjangsService.create({
+                message: 'Group berhasil dibuat',
+                data: await this.groupingsService.create({
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -57,12 +57,12 @@ export class JenjangsController {
         @Body() dto: UpdateDto
     ) {
         try {
-            const old = await this.jenjangsService.findOne(id);
+            const old = await this.groupingsService.findOne(id);
 
             return {
                 statusCode: 200,
-                message: 'jenjang berhasil diperbarui',
-                data: await this.jenjangsService.update(id, {
+                message: 'Group berhasil diperbarui',
+                data: await this.groupingsService.update(id, {
                     ...dto,
                     slug: slug(dto.name ?? '')
                 }),
@@ -77,8 +77,8 @@ export class JenjangsController {
         try {
             return {
                 statusCode: 200,
-                message: 'jenjang berhasil dihapus',
-                data: await this.jenjangsService.remove(id)
+                message: 'Group berhasil dihapus',
+                data: await this.groupingsService.remove(id)
             };
         } catch (error) {
             throw error;

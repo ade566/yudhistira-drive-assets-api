@@ -5,14 +5,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-import { UsersModule } from './users/users.module';
-import { AdminModule } from './admin/admin.module';
-import { AuthModule } from './auth/auth.module';
-import { CategoriesModule } from './categories/categories.module';
-import { GroupingsModule } from './groupings/groupings.module';
-import { ExtensionsModule } from './extensions/extensions.module';
-import { FormatsModule } from './formats/formats.module';
-import { JenjangsModule } from './jenjangs/jenjangs.module';
+import { UsersModule } from './users/module';
+import { AdminModule } from './admin/module';
+import { AuthModule } from './auth/module';
+import { CategoriesModule } from './categories/module';
+import { GroupingsModule } from './groupings/module';
+import { ExtensionsModule } from './extensions/module';
+import { FormatsModule } from './formats/module';
+import { JenjangsModule } from './jenjangs/module';
 
 @Module({
 	imports: [

@@ -1,5 +1,5 @@
 import { Controller, Post, Body, UseInterceptors } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthService } from './service';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { AuthDto } from './dto/auth.dto';
 

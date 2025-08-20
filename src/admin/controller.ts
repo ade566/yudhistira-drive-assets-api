@@ -1,5 +1,5 @@
 import { Controller, Post, Put, Body, Param, UseInterceptors, ConflictException } from '@nestjs/common';
-import { AdminService } from './admin.service';
+import { AdminService } from './service';
 import { NoFilesInterceptor } from '@nestjs/platform-express';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
