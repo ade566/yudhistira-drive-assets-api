@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Expose } from 'class-transformer';
+import { ClassLevels } from '../class_levels/entity';
 
 @Entity('jenjangs')
 export class Jenjangs {
@@ -11,4 +12,7 @@ export class Jenjangs {
 
     @Column({ nullable: true })
     slug?: string;
+
+    @OneToMany(() => ClassLevels, (classLevel) => classLevel.jenjang)
+    classLevels: ClassLevels[];
 }

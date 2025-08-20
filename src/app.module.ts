@@ -13,6 +13,7 @@ import { GroupingsModule } from './groupings/module';
 import { ExtensionsModule } from './extensions/module';
 import { FormatsModule } from './formats/module';
 import { JenjangsModule } from './jenjangs/module';
+import { ClassLevelsModule } from './class_levels/module';
 
 @Module({
 	imports: [
@@ -49,7 +50,8 @@ import { JenjangsModule } from './jenjangs/module';
 		GroupingsModule,
 		ExtensionsModule,
 		FormatsModule,
-		JenjangsModule
+		JenjangsModule,
+		ClassLevelsModule
 	],
 })
 export class AppModule { }

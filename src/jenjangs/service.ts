@@ -11,9 +11,14 @@ export class JenjangsService {
 
     async findAll(options?: { limit?: number, all?: boolean }) {
         if (options?.limit && options.limit > 0) {
-            return this.jenjangsRepo.find({ take: options.limit });
+            return this.jenjangsRepo.find({ 
+                take: options.limit,
+                relations: ['classLevels']
+             });
         }
-        return this.jenjangsRepo.find();
+        return this.jenjangsRepo.find({
+            relations: ['classLevels']
+        });
     }
 
     findOne(id: number) {
