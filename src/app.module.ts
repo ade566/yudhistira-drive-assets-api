@@ -12,6 +12,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { GroupingsModule } from './groupings/groupings.module';
 import { ExtensionsModule } from './extensions/extensions.module';
 import { FormatsModule } from './formats/formats.module';
+import { JenjangsModule } from './jenjangs/jenjangs.module';
 
 @Module({
 	imports: [
@@ -47,7 +48,8 @@ import { FormatsModule } from './formats/formats.module';
 		CategoriesModule,
 		GroupingsModule,
 		ExtensionsModule,
-		FormatsModule
+		FormatsModule,
+		JenjangsModule
 	],
 })
 export class AppModule { }
