@@ -1,10 +1,14 @@
-import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, ClassSerializerInterceptor, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Query, Param, UseInterceptors, Req, ClassSerializerInterceptor, UploadedFile, UploadedFiles } from '@nestjs/common';
 import { AssetsService } from './service';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
-import { FileUpload, validateImageFile, joinPath } from '../../utils/file-upload.util';
+import { FileUpload, validateImageFile, joinPath, FileUploadFields, cleanupUploadedFiles } from '../../utils/file-upload.util';
 import { slug } from '../../utils/general';
 import { unlink } from 'fs/promises';
+import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
+import type { UploadRequest } from '../../Interfaces/upload-request.interface';
 
 @Controller('assets')
 export class AssetsController {
@@ -55,10 +59,20 @@ export class AssetsController {
     }
 
     @Post('create')
-    @UseInterceptors(FileUpload('thumbnail', 'thumbnail'))
+    @UseInterceptors(
+        FileUploadFields('assets', [
+            { name: 'thumbnail', maxCount: 1, folder_path: 'thumbnail' },
+            { name: 'contents', maxCount: 50, folder_path: 'contents' },
+        ]),
+    )
     async create(
         @Body() dto: CreateDto,
-        @UploadedFile() thumbnail: Express.Multer.File
+        @UploadedFiles()
+        files: {
+            thumbnail?: Express.Multer.File[];
+            contents?: Express.Multer.File[];
+        },
+        @Req() req: UploadRequest
     ) {
         try {
             return {
@@ -67,11 +81,12 @@ export class AssetsController {
                 data: await this.assetsService.create({
                     ...dto,
                     slug: slug(dto.title ?? ''),
-                    thumbnail: 'uploads/thumbnail/' + thumbnail?.filename,
-                }),
+                    thumbnail: files.thumbnail?.[0]?.path.replace(/\\/g, '/'),
+                }, files.contents)
             };
-        } catch (err) {
-            throw err;
+        } catch (error) {
+            cleanupUploadedFiles(files);
+            throw error;
         }
     }
 
@@ -87,9 +102,9 @@ export class AssetsController {
 
             if (thumbnail) {
                 validateImageFile(thumbnail, 2);
-          
+
                 if (old?.thumbnail) {
-                    await unlink(joinPath(old.thumbnail)).catch(() => {});
+                    await unlink(joinPath(old.thumbnail)).catch(() => { });
                 }
             }
 
