@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Assets } from './entity';
 import { AssetContent } from './contents/entity';
 import { DataSource } from 'typeorm';
@@ -13,11 +13,16 @@ export class AssetsService {
         private readonly dataSource: DataSource
     ) { }
 
-    async findAll(options?: { limit?: number, category_id?: number, jenjang_id?: number, class_level_id?: number }) {
+    async findAll(options?: { 
+        page?: number,
+        limit?: number, 
+        category_id?: number, 
+        jenjang_id?: number, 
+        class_level_id?: number,
+        title?: string
+    }) {
         const where: any = {};
-
-        const relations = ['user', 'category']
-
+    
         if (options?.category_id) {
             where.category = { id: options.category_id };
         }
@@ -27,16 +32,30 @@ export class AssetsService {
         if (options?.class_level_id) {
             where.classLevel = { id: options.class_level_id };
         }
-
-        if (options?.limit && options.limit > 0) {
-            return this.assetsRepo.find({
-                where,
-                relations,
-                take: options.limit
-            });
+        if (options?.title) {
+            where.title = ILike(`%${options.title}%`);
         }
-        return this.assetsRepo.find({ where, relations });
-    }
+    
+        const page = options?.page && options.page > 0 ? options.page : 1;
+        const limit = options?.limit && options.limit > 0 ? options.limit : 10;
+    
+        const [data, total] = await this.assetsRepo.findAndCount({
+            where,
+            relations: ['user', 'category'],
+            take: limit,
+            skip: (page - 1) * limit,
+            order: { id: 'DESC' },
+        });
+    
+        return {
+            data,
+            meta: {
+                total,
+                page,
+                lastPage: Math.ceil(total / limit),
+            },
+        };
+    }    
 
     findOne(id: number) {
         return this.assetsRepo.findOne({

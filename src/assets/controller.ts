@@ -5,9 +5,6 @@ import { UpdateDto } from './dto/update.dto';
 import { FileUpload, validateImageFile, joinPath, FileUploadFields, cleanupUploadedFiles } from '../../utils/file-upload.util';
 import { slug } from '../../utils/general';
 import { unlink } from 'fs/promises';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
 import type { UploadRequest } from '../../Interfaces/upload-request.interface';
 
 @Controller('assets')
@@ -20,23 +17,31 @@ export class AssetsController {
         @Query('limit') limitQuery?: string,
         @Query('category_id') categoryIdQuery?: string,
         @Query('jenjang_id') jenjangIdQuery?: string,
-        @Query('class_level_id') classLevelIdQuery?: string
+        @Query('class_level_id') classLevelIdQuery?: string,
+        @Query('page') pageQuery?: string,
+        @Query('title') titleQuery?: string
     ) {
         const limit = limitQuery ? parseInt(limitQuery, 10) : undefined;
         const category_id = categoryIdQuery ? parseInt(categoryIdQuery, 10) : undefined;
         const jenjang_id = jenjangIdQuery ? parseInt(jenjangIdQuery, 10) : undefined;
         const class_level_id = classLevelIdQuery ? parseInt(classLevelIdQuery, 10) : undefined;
+        const page = pageQuery ? parseInt(pageQuery, 10) : undefined;
+        const title = titleQuery ?? undefined;
+
+        const get_data = await this.assetsService.findAll({
+            page,
+            limit,
+            category_id,
+            jenjang_id,
+            class_level_id,
+            title
+        })
 
         return {
             statusCode: 200,
             message: 'Data assets berhasil diambil',
             limit,
-            data: await this.assetsService.findAll({
-                limit,
-                category_id,
-                jenjang_id,
-                class_level_id
-            })
+            ...get_data
         };
     }
 
