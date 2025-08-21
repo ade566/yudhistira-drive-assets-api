@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Expose } from 'class-transformer';
+import { Assets } from '../entity';
 
 @Entity('asset_contents')
 export class AssetContent {
@@ -24,4 +25,8 @@ export class AssetContent {
 
     @Column()
     asset_id: number;
+
+    @ManyToOne(() => Assets, (asset) => asset.contents, { nullable: false })
+    @JoinColumn({ name: 'asset_id' })
+    asset: Assets;
 }

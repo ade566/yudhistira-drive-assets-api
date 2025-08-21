@@ -60,7 +60,7 @@ export class AssetsService {
     findOne(id: number) {
         return this.assetsRepo.findOne({
             where: { id },
-            relations: ['user', 'category', 'extension', 'format', 'grouping', 'jenjang', 'classLevel'],
+            relations: ['user', 'category', 'extension', 'format', 'grouping', 'jenjang', 'classLevel', 'contents'],
         });
     }
 

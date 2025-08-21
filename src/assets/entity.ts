@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { User } from '../users/entity';
 import { Categories } from '../categories/entity';
 import { Extensions } from '../extensions/entity';
@@ -7,6 +7,7 @@ import { Groupings } from '../groupings/entity';
 import { Jenjangs } from '../jenjangs/entity';
 import { ClassLevels } from '../class_levels/entity';
 import { Expose } from 'class-transformer';
+import { AssetContent } from './contents/entity';
 
 @Entity('assets')
 export class Assets {
@@ -86,4 +87,8 @@ export class Assets {
             ? `${process.env.APP_URL}${this.thumbnail}`
             : '';
     }
+
+    @OneToMany(() => AssetContent, (content) => content.asset)
+    contents?: AssetContent[];
+
 }
