@@ -14,6 +14,7 @@ import { ExtensionsModule } from './extensions/module';
 import { FormatsModule } from './formats/module';
 import { JenjangsModule } from './jenjangs/module';
 import { ClassLevelsModule } from './class_levels/module';
+import { AssetsModule } from './assets/module';
 
 @Module({
 	imports: [
@@ -51,7 +52,8 @@ import { ClassLevelsModule } from './class_levels/module';
 		ExtensionsModule,
 		FormatsModule,
 		JenjangsModule,
-		ClassLevelsModule
+		ClassLevelsModule,
+		AssetsModule
 	],
 })
 export class AppModule { }

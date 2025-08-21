@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { Expose } from 'class-transformer';
+import { Expose, Exclude } from 'class-transformer';
 
 @Entity('users')
 export class User {
@@ -12,6 +12,7 @@ export class User {
     @Column({ unique: true })
     email: string;
 
+	@Exclude()
     @Column()
     password: string;
 
@@ -20,8 +21,8 @@ export class User {
 
     @Expose()
     get avatar_url(): string {
-      return this.avatar
-        ? `${process.env.APP_URL}${this.avatar}`
-        : `https://robohash.org/${encodeURIComponent(this.name)}.png`;
+		return this.avatar
+			? `${process.env.APP_URL}${this.avatar}`
+			: `https://robohash.org/${encodeURIComponent(this.name)}.png`;
     }
 }
